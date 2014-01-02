@@ -174,8 +174,6 @@ module Tire
       #     end
 
       index_name = options[:index_name] || name
-      puts "hacking"
-      puts index_name
 
       payload = documents.map do |document|
         type = get_type_from_document(document, :escape => false) # Do not URL-escape the _type
