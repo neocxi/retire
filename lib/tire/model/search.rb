@@ -63,14 +63,16 @@ module Tire
         #     Article.search :load => { :include => 'comments' } do ... end
         #
         def search(*args, &block)
-          default_options = {:type => document_type, :index => index.name}
-
           if block_given?
             options = args.shift || {}
           else
             query, options = args
             options ||= {}
           end
+
+          index_name = options[:index_name] || index.name
+          default_options = {:type => document_type, :index => index_name}
+
 
           options   = default_options.update(options)
           sort      = Array( options.delete(:order) || options.delete(:sort) )

@@ -173,6 +173,10 @@ module Tire
       #       # ...
       #     end
 
+      index_name = options[:index_name] || name
+      puts "hacking"
+      puts index_name
+
       payload = documents.map do |document|
         type = get_type_from_document(document, :escape => false) # Do not URL-escape the _type
         id   = get_id_from_document(document)
@@ -189,7 +193,7 @@ module Tire
           raise ArgumentError, "Update requires either a script or a partial document" unless document[:script] || document[:doc]
         end
 
-        header = { action.to_sym => { :_index => name, :_type => type, :_id => id } }
+        header = { action.to_sym => { :_index => index_name, :_type => type, :_id => id } }
         header[action.to_sym].update({:_retry_on_conflict => options[:retry_on_conflict]}) if options[:retry_on_conflict]
 
         if document.respond_to?(:to_hash) && doc_hash = document.to_hash
